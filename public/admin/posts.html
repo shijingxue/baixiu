@@ -32,15 +32,15 @@
             <div class="page-action">
                 <!-- show when multiple checked -->
                 <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
-                <form class="form-inline">
-                    <select name="" class="form-control input-sm">
-            <option value="">所有分类</option>
-          </select>
-                    <select name="" class="form-control input-sm">
-            <option value="">所有状态</option>
-            <option value="">草稿</option>
-            <option value="">已发布</option>
-          </select>
+                <form class="form-inline" id="queryForm">
+                    <select name="category" class="form-control input-sm" id="findBox">
+                          
+                        </select>
+                    <select name="state" class="form-control input-sm">
+                          <!-- <option value="">所有状态</option> -->
+                          <option value="0">草稿</option>
+                          <option value="1">已发布</option>
+                        </select>
                     <button class="btn btn-default btn-sm">筛选</button>
                 </form>
                 <ul class="pagination pagination-sm pull-right" id="pageBox">
@@ -119,7 +119,7 @@
             <td class="text-center">{{$value.category.createAt}}</td>
             <td class="text-center">{{$value.state==1?'已发布':'未发布'}}</td>
             <td class="text-center">
-                <a href="post-add.html?id={{$value._id}}" class="btn btn-default btn-xs">编辑</a>
+                <a href="post-add.html?id={{$value._id}}" class="btn btn-default btn-xs ">编辑</a>
                 <a href="javascript:;" class="btn btn-danger btn-xs" id='delete' data-id='{{$value._id}}'>删除</a>
             </td>
         </tr>
@@ -127,12 +127,21 @@
     </script>
     <!-- 分页的模板 -->
     <script type="text/html" id='pageTpl'>
-        <li><a href="#">上一页</a></li>
-        {{each page}}
-        <li><a href="javascript:;">{{}}</a></li>
-        {{/each}}
-        <li><a href="#">下一页</a></li>
+        {{if page>1}}
+        <li><a href="javascript:;" onclick='changePage({{page-1}})'>上一页</a></li>{{/if}} {{each display}}
+        <li><a href="javascript:;" onclick='changePage({{$value}})'>{{$value}}</a></li>
+        {{/each}} {{if page
+        < pages}} <li><a href="javascript:;" onclick='changePage({{page+1}})'>下一页</a></li>{{/if}}
     </script>
+
+    <!-- 分类模板 -->
+    <script type="text/html" id="findTpl">
+        <option value="">所有分类</option>
+        {{each data}}
+        <option value="{{$value._id}}">{{$value.title}}</option>
+        {{/each}}
+    </script>
+
 </body>
 
 </html>

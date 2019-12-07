@@ -52,4 +52,65 @@ $('#addForm').on('submit', function() {
 
     //阻止表单的默认行为
     return false;
+});
+
+
+//从浏览器地址栏获取查询参数
+function getUrlParams(name) {
+    //拿到？及之后的内容  并分割开
+    var query = location.search.slice(1).split('&');
+    //默认为-1  没有就是-1
+    var value = -1;
+    // console.log(query);
+    if (query && query.length > 0) {
+        query.forEach(item => {
+            var tmp = item.split('=');
+            if (name === tmp[0]) {
+                value = tmp[1];
+            }
+        })
+    }
+    return value
+
+}
+
+//获取浏览器地址栏中的id
+var id = getUrlParams('id')
+    //返回值不为-1则表示是修改操作
+if (id != -1) {
+    $.ajax({
+        type: 'put',
+        url: '/posts/' + id,
+        success: function(response) {
+            //根据id获取文章内容
+            $.ajax({
+                type: 'get',
+                url: '/categories',
+                success: function(result) {
+                    response.result = result;
+                    console.log(response);
+                    var html = template('changeTpl', response);
+                    $('#changeForm').html(html);
+                }
+            })
+        }
+    })
+}
+
+
+
+//修改表单发生提交行为
+$('#changeForm').on('submit', '#addForm', function() {
+    var text = $(this).serialize();
+    var id = $(this).attr('data-id');
+    $.ajax({
+            type: 'put',
+            url: '/posts/' + id,
+            data: text,
+            success: function(result) {
+                location.href = '/admin/posts.html';
+            }
+        })
+        //阻止默认事件
+    return false
 })
