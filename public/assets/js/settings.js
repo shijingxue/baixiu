@@ -42,9 +42,11 @@ $('#settingsForm').on('submit', function() {
         type: 'post',
         url: '/settings',
         data: text,
+        //请求的额超时时间
+        timeout: 5000,
         success: function(result) {
             console.log(result);
-            // location.reload();
+            location.reload();
         },
         error: function(res) {
             console.log(res);
@@ -52,4 +54,32 @@ $('#settingsForm').on('submit', function() {
         }
     })
     return false
+})
+
+//回显用户设置
+//向网站发送数据  索要网站配置数据
+$.ajax({
+    type: 'get',
+    url: '/settings',
+    success: function(result) {
+        console.log(result);
+
+        //将各项信息显示在页面
+        //存在隐藏域中
+        $('#site_logo').val(result.logo)
+            //把logo显示出来
+        $('#preview').attr('src', result.logo);
+        //隐藏域
+        $('input[name="logo"]').val(result.logo);
+        //站点名称
+        $('input[name="title"]').val(result.title);
+        //站点描述
+        $('#site_description').val(result.description);
+        //站点关键词
+        $('input[name="keywords"]').val(result.keywords);
+        //开启评论功能
+        $('input[name="comment"]').prop('checked', result.comment);
+        //人工批准
+        $('input[name="review"]').prop('checked', result.review);
+    }
 })
