@@ -41,8 +41,8 @@ const Comment = mongoose.model('Comment', CommentSchema);
 
 Comment.create({
     content: '内容很精彩 ',
-    author: '5de76c30c0215f8338ad1f89', // 从数据库中查看用户id 
-    post: '5de8fe9970b93f55f4ff67ed' // 从数据库中查看文章id 
+    author: '5dec629f5636132c54b007e7', // 从数据库中查看用户id 
+    post: '5dec90415636132c54b007e8' // 从数据库中查看文章id 
 }).then(x => {
     console.log('评论插入成功')
 })

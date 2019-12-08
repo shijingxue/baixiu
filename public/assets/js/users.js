@@ -104,8 +104,8 @@ $('#motifyBox').on('submit', '#userForm', function() {
         data: inn,
         success: function(result) {
             console.log(result);
-            userReload();
-            location.reload;
+            // userReload();
+            location.reload();
         }
     })
     return false;

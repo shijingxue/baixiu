@@ -69,8 +69,6 @@ $.ajax({
         $('#site_logo').val(result.logo)
             //把logo显示出来
         $('#preview').attr('src', result.logo);
-        //隐藏域
-        $('input[name="logo"]').val(result.logo);
         //站点名称
         $('input[name="title"]').val(result.title);
         //站点描述

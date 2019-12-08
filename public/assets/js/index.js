@@ -29,3 +29,5 @@ $.ajax({
         $('#comment').html('<strong>' + result.commentCount + '</strong>条评论（<strong>1</strong>条待审核）')
     }
 })
+
+//显示登录用户的信息
